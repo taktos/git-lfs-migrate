@@ -57,7 +57,7 @@ public class Main {
     final long time = System.currentTimeMillis();
     final Client client;
     if (cmd.lfs != null) {
-      client = createClient(new BasicAuthProvider(URI.create(cmd.lfs)), cmd);
+      client = createClient(new BasicAuthProvider(URI.create(cmd.lfs), cmd.username, cmd.password), cmd);
     } else if (cmd.git != null) {
       client = createClient(AuthHelper.create(cmd.git), cmd);
     } else {
@@ -430,6 +430,12 @@ public class Main {
     @Parameter(names = {"-l", "--lfs"}, description = "LFS server url (can be determinated by --git paramter)", required = false)
     @Nullable
     private String lfs;
+    @Parameter(names = {"--username"}, description = "Username for BASIC Authentication of LFS server", required = false)
+    @Nullable
+    private String username;
+    @Parameter(names = {"-p", "--password"}, description = "Password for BASIC Authentication", required = false)
+    @Nullable
+    private String password;
     @Parameter(names = {"-t", "--write-threads"}, description = "IO thread count", required = false)
     private int writeThreads = 2;
     @Parameter(names = {"-u", "--upload-threads"}, description = "HTTP upload thread count", required = false)
